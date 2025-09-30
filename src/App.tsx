@@ -1,6 +1,5 @@
-import Navbar from "./components/navbar";
 import CodeEditorLanding from "./components/LandingPage";
-
+import Navbar from "./components/Navbar";
 function App() {
 
 
