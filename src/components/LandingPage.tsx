@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Code2, Zap, Globe, Lock, Terminal, Sparkles } from 'lucide-react';
 
 export default function CodeEditorLanding() {
