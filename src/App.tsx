@@ -1,14 +1,20 @@
-import CodeEditorLanding from "./components/LandingPage";
-import Navbar from "./components/Navbar";
+import { Routes, Route } from "react-router-dom";
+import MainComonent from "./components/mainComponent/Main";
+import LoginPage from "./pages/login";
+import RegisterPage from "./pages/Signup"
+import WorkspaceLayout from "./pages/workspace";
+
 function App() {
 
 
 
   return (
-    <div>
-     <Navbar />
-     <CodeEditorLanding />
-    </div>
+    <Routes>
+      <Route path="/" element={<MainComonent/> } />
+      <Route path="/login" element={<LoginPage/> } />
+      <Route path="/signup" element={<RegisterPage/> } />
+      <Route path="/workspace" element={ <WorkspaceLayout />} />
+    </Routes>
   );
 }
 

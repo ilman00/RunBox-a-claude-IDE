@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link to="/signin" className="text-sm px-4 py-2 rounded hover:text-gray-400">
+          <Link to="/login" className="text-sm px-4 py-2 rounded hover:text-gray-400">
             Sign In
           </Link>
           <Link
@@ -106,7 +106,7 @@ const Navbar: React.FC = () => {
           {/* Mobile Actions */}
           <div className="flex flex-col space-y-4 mt-8">
             <Link
-              to="/signin"
+              to="/login"
               className="text-center text-sm px-4 py-3 rounded border border-gray-700 hover:bg-gray-900"
               onClick={closeMenu}
             >
