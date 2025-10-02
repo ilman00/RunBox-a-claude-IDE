@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
           <li><Link to="/resources" className="hover:text-gray-400">Resources</Link></li>
           <li><Link to="/docs" className="hover:text-gray-400">Docs</Link></li>
           <li><Link to="/support" className="hover:text-gray-400">Support</Link></li>
-          <li><Link to="/pricing" className="hover:text-gray-400">Pricing</Link></li>
+          <li><Link to="/workspace" className="hover:text-gray-400">Workspace</Link></li>
         </ul>
 
         {/* Desktop Actions */}
@@ -97,8 +97,8 @@ const Navbar: React.FC = () => {
               </Link>
             </li>
             <li>
-              <Link to="/pricing" className="hover:text-gray-400" onClick={closeMenu}>
-                Pricing
+              <Link to="/workspace" className="hover:text-gray-400" onClick={closeMenu}>
+                Workspace
               </Link>
             </li>
           </ul>
