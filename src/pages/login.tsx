@@ -1,15 +1,37 @@
 import React, { useState } from 'react';
-import {  Mail, Lock, Github, Chrome, Eye, EyeOff, Terminal, Cloud } from 'lucide-react';
+import { Mail, Lock, Github, Eye, EyeOff, Terminal, Cloud } from 'lucide-react';
+import GoogleLogin from "../components/googleLogin"
+import { login } from '../api';
+import { useNavigate } from "react-router-dom";
+
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login:', { email, password });
+
+    try {
+      const response = await login({ email, password });
+
+      const user = response.data.user;
+      const accessToken = response.data.accessToken;
+
+      // ✅ Correct way to store token (key + value)
+      localStorage.setItem("token", accessToken);
+      localStorage.setItem("user", user)
+
+      console.log("User logged in:", user);
+
+      navigate("/workspace")
+    } catch (error: any) {
+      console.error("Login failed:", error.response?.data || error.message);
+    }
   };
+
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
@@ -18,7 +40,7 @@ export default function LoginPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20" />
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500 rounded-full blur-3xl opacity-20 animate-pulse" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '1s' }} />
-        
+
         {/* Floating Code Elements */}
         <div className="absolute top-20 left-10 text-purple-500/20 font-mono text-sm animate-pulse">
           {'<div>'}
@@ -35,7 +57,7 @@ export default function LoginPage() {
       <div className="relative w-full max-w-md">
         {/* Glowing Border Effect */}
         <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl blur-xl opacity-50" />
-        
+
         <div className="relative bg-gray-900 rounded-2xl border border-gray-800 shadow-2xl p-8">
           {/* Header */}
           <div className="text-center mb-8">
@@ -57,10 +79,10 @@ export default function LoginPage() {
               <Github className="w-5 h-5" />
               <span>Continue with GitHub</span>
             </button>
-            <button className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-gray-800 hover:bg-gray-750 border border-gray-700 rounded-lg transition-all duration-300 hover:border-blue-500 group">
-              <Chrome className="w-5 h-5" />
-              <span>Continue with Google</span>
-            </button>
+            <div className="w-full flex items-center justify-center mt-4">
+              <GoogleLogin />
+            </div>
+
           </div>
 
           {/* Divider */}

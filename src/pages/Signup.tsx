@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { User, Mail, Lock, Github, Chrome, Eye, EyeOff,  Cloud, Sparkles } from 'lucide-react';
-
+import { User, Mail, Lock, Github, Chrome, Eye, EyeOff, Cloud, Sparkles } from 'lucide-react';
+import { register } from '../api';
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -15,10 +15,40 @@ export default function RegisterPage() {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = () => {
-    console.log('Register:', formData);
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
+    // ✅ Basic validation
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    try {
+      const response = await register({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // ✅ Access data returned from API
+      const user = response.data.user;
+      const accessToken = response.data.accessToken;
+
+      // ✅ Store token in localStorage
+      localStorage.setItem("token", accessToken);
+
+      console.log("Registered successfully:", user);
+      alert("Registration successful!");
+
+      // optional redirect here if using React Router
+      // navigate("/dashboard");
+    } catch (error: any) {
+      console.error("Registration failed:", error.response?.data || error.message);
+      alert(error.response?.data?.message || "Registration failed");
+    }
+  };
+  
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
       {/* Animated Background */}
@@ -26,7 +56,7 @@ export default function RegisterPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20" />
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-500 rounded-full blur-3xl opacity-20 animate-pulse" />
         <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '1s' }} />
-        
+
         {/* Floating Code Elements */}
         <div className="absolute top-32 right-10 text-purple-500/20 font-mono text-sm animate-pulse">
           {'import React'}
@@ -43,7 +73,7 @@ export default function RegisterPage() {
       <div className="relative w-full max-w-md">
         {/* Glowing Border Effect */}
         <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl blur-xl opacity-50" />
-        
+
         <div className="relative bg-gray-900 rounded-2xl border border-gray-800 shadow-2xl p-8">
           {/* Header */}
           <div className="text-center mb-8">
