@@ -13,6 +13,7 @@ import {
   Cpu,
   Palette
 } from 'lucide-react';
+import { createProject } from "../../api"; // adjust import path
 
 // Interfaces
 interface ProjectTemplate {
@@ -138,37 +139,27 @@ export default function WorkspaceNavbar({ onCreateProject }: WorkspaceNavbarProp
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleCreateProject = async () => {
-    if (!validateForm()) return;
+ 
+const handleCreateProject = async () => {
+  if (!validateForm()) return;
+  setIsCreating(true);
 
-    setIsCreating(true);
-    
-    // Set image based on template
-    const projectData = {
-      ...newProject,
-      image: getTemplateImage(newProject.template)
-    };
-
-    // API Integration Ready
-    // try {
-    //   const response = await fetch('/api/projects', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(projectData)
-    //   });
-    //   const data = await response.json();
-    //   onCreateProject?.(data);
-    // } catch (error) {
-    //   console.error('Failed to create project:', error);
-    // }
-
-    // Simulate API call
-    setTimeout(() => {
-      onCreateProject?.(projectData);
-      setIsCreating(false);
-      handleCloseModal();
-    }, 1000);
+  const projectData = {
+    ...newProject,
+    image: getTemplateImage(newProject.template),
   };
+
+  try {
+    const { data } = await createProject(projectData);
+    onCreateProject?.(data.project);
+    handleCloseModal();
+  } catch (err: any) {
+    console.error(err.response?.data || err.message);
+    alert(err.response?.data?.message || "Failed to create project");
+  } finally {
+    setIsCreating(false);
+  }
+};
 
   const handleCloseModal = () => {
     setIsCreateModalOpen(false);

@@ -20,7 +20,11 @@ interface Project {
   starred?: boolean;
 }
 
-export default function ProjectsGrid() {
+interface ProjectsGridProps {
+  onOpenProject?: (projectId: string) => void;
+}
+
+export default function ProjectsGrid({ onOpenProject }: ProjectsGridProps) {
   // State management - Replace with API data
   const [projects, setProjects] = useState<Project[]>([
     {
@@ -119,8 +123,8 @@ export default function ProjectsGrid() {
   };
 
   const handleOpen = (projectId: string) => {
-    // TODO: Navigate to IDE with project loaded
-    console.log('Open project:', projectId);
+    // Call the parent's navigation handler
+    onOpenProject?.(projectId);
   };
 
   return (

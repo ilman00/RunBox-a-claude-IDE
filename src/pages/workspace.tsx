@@ -6,12 +6,12 @@ import {
     Archive,
     Settings,
     Bell,
-    Menu,
+    // Menu,
 } from 'lucide-react';
 import WorkspaceSidebar from '../components/workspace/WorkspaceSidebar';
 import WorkspaceProjects from "../components/workspace/WorkspaceProjects"
 import WorkspaceNavbar from "../components/workspace/Navbar"
-
+import { useNavigate } from 'react-router-dom';
 // Types for API integration
 interface User {
     id: string;
@@ -26,6 +26,7 @@ export default function WorkspaceLayout() {
     // State for mobile sidebar toggle
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [activeNav, setActiveNav] = useState('projects');
+    const navigate = useNavigate();
 
     // Mock user data - Replace with API call
     const [user] = useState<User>({
@@ -45,6 +46,10 @@ export default function WorkspaceLayout() {
     //   };
     //   fetchUserData();
     // }, []);
+
+    const handleOpenProject = (projectId: string) => {
+        navigate(`/ide/${projectId}`);
+    };
 
     const handleLogout = async () => {
         // TODO: Implement logout API call
@@ -131,7 +136,7 @@ export default function WorkspaceLayout() {
                                 <p className="text-gray-500">
                                     Header, filters, and project cards will go here in the next chunks
                                 </p> */}
-                        <WorkspaceProjects />
+                        <WorkspaceProjects onOpenProject={handleOpenProject} />
                     </div>
                 </main>
             </div>

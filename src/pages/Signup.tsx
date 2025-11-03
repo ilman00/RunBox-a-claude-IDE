@@ -36,7 +36,7 @@ export default function RegisterPage() {
       const accessToken = response.data.accessToken;
 
       // ✅ Store token in localStorage
-      localStorage.setItem("token", accessToken);
+      localStorage.setItem("accessToken", accessToken);
 
       console.log("Registered successfully:", user);
       alert("Registration successful!");

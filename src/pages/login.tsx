@@ -21,7 +21,7 @@ export default function LoginPage() {
       const accessToken = response.data.accessToken;
 
       // ✅ Correct way to store token (key + value)
-      localStorage.setItem("token", accessToken);
+      localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("user", user)
 
       console.log("User logged in:", user);
