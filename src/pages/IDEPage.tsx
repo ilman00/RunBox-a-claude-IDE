@@ -60,7 +60,8 @@ export default function IDEPage({ projectId = 'proj_1a2b3c', userId = 'user_123'
     const [isTerminalOpen, setIsTerminalOpen] = useState(true);
 
 
-        
+    console.log(activeFile);
+
 
     // Mock project data
     const mockProject: IDEProject = {
