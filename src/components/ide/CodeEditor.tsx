@@ -29,7 +29,6 @@ export default function CodeEditor({
   onChange,
   onSave,
   readOnly = false,
-  theme = 'vs-dark'
 }: CodeEditorProps) {
   const [editorValue, setEditorValue] = useState(value);
   const [isDirty, setIsDirty] = useState(false);
